@@ -18,7 +18,7 @@ This is the **Racist-O-meter**. It’s a Python tool that checks if a given text
 
 1. **Clone the Repo**:
    ```bash
-   git clone https://github.com/your-username/Racist-O-meter.git
+   git clone https://github.com/0day-Yash/Racist-O-meter.git
    ```
 2. **Navigate to the Directory**:
    ```bash
