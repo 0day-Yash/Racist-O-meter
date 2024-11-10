@@ -39,5 +39,5 @@ check_button.pack(pady=10)
 result_label = tk.Label(root, text="")
 result_label.pack(pady=10)
 
-# Run the application
+# Run the application again
 root.mainloop()
