@@ -13,12 +13,24 @@ def load_all_dictionaries(directory):
                 messagebox.showerror("Error", f"Failed to load {filename}: {e}")
     return list(undesirable_words)
 
+import random
+
 def check_text(text, undesirable_words):
+    offensive_responses = [
+        "Nigga yo gettin' racist again.",
+        "Bitch one more racist thing and imma fuck you to death in front of the media",
+        "NIGGA WTF D'YOU MEAN",
+        "Stupid Brit, Whoa there! That's not cool.",
+        "You might want to rethink that wording."
+    ]
+    
     text_lower = text.lower()
     for word in undesirable_words:
         if word in text_lower:
-            return "Nigga yo gettin' racist again."
+            return random.choice(offensive_responses)
+    
     return "This text seems okay."
+
 
 def on_check():
     input_text = text_entry.get("1.0", tk.END).strip()
