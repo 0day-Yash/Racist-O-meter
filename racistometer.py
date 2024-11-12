@@ -1,9 +1,17 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
+import os
 
-def load_undesirable_words(filename):
-    with open(filename, 'r') as file:
-        return [line.strip().lower() for line in file]
+def load_all_dictionaries(directory):
+    undesirable_words = set()
+    for filename in os.listdir(directory):
+        if filename.endswith('.txt'):
+            try:
+                with open(os.path.join(directory, filename), 'r', encoding='utf-8') as file:
+                    undesirable_words.update([line.strip().lower() for line in file])
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load {filename}: {e}")
+    return list(undesirable_words)
 
 def check_text(text, undesirable_words):
     text_lower = text.lower()
@@ -20,8 +28,15 @@ def on_check():
     result = check_text(input_text, undesirable_words)
     result_label.config(text=result)
 
-# Load undesirable words from en.txt
-undesirable_words = load_undesirable_words('en.txt')
+def on_load_dictionaries():
+    global undesirable_words
+    directory = filedialog.askdirectory(title="Select Dictionary Directory")
+    if directory:
+        undesirable_words = load_all_dictionaries(directory)
+        messagebox.showinfo("Success", f"Dictionaries loaded from: {directory}\nTotal words: {len(undesirable_words)}")
+
+# Default load of dictionaries from current directory
+undesirable_words = load_all_dictionaries(os.getcwd())
 
 # Create the main application window
 root = tk.Tk()
@@ -35,6 +50,9 @@ text_entry.pack(pady=10)
 
 check_button = tk.Button(root, text="Check", command=on_check)
 check_button.pack(pady=10)
+
+load_button = tk.Button(root, text="Load Dictionaries", command=on_load_dictionaries)
+load_button.pack(pady=10)
 
 result_label = tk.Label(root, text="")
 result_label.pack(pady=10)
